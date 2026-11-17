@@ -1,0 +1,1788 @@
+<!doctype html>
+<html lang="en" class="dark scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IPv4 Subnet Calculator &amp; Visual CIDR Bit Explorer (2026) | Mohit Tools</title>
+    <meta
+      name="description"
+      content="Free visual IPv4 subnet calculator with interactive 32-bit binary blocks. Instantly calculate CIDR masks, wildcard masks, usable IP ranges, and split subnets in real time."
+    />
+    <link rel="canonical" href="https://subnet.mohit-tools.com/" />
+    <!-- Google Search & Browser Favicons -->
+<link rel="icon" type="image/png" sizes="192x192" href="https://subnet.mohit-tools.com/favicon.png" />
+<link rel="apple-touch-icon" href="https://subnet.mohit-tools.com/favicon.png" />
+
+<!-- Site Name Structured Data for Google Search -->
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Mohit Tools",
+    "alternateName": ["Mohit Tools Subnet Calculator", "subnet.mohit-tools.com"],
+    "url": "https://subnet.mohit-tools.com/"
+  }
+</script>
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://subnet.mohit-tools.com/" />
+    <meta property="og:site_name" content="Mohit Tools" />
+    <meta property="og:title" content="IPv4 Subnet Calculator &amp; Visual CIDR Bit Explorer (2026) | Mohit Tools" />
+    <meta
+      property="og:description"
+      content="Free visual IPv4 subnet calculator with interactive 32-bit binary blocks. Instantly calculate CIDR masks, wildcard masks, usable IP ranges, and split subnets in real time."
+    />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="IPv4 Subnet Calculator &amp; Visual CIDR Bit Explorer (2026) | Mohit Tools" />
+    <meta
+      name="twitter:description"
+      content="Free visual IPv4 subnet calculator with interactive 32-bit binary blocks. Instantly calculate CIDR masks, wildcard masks, usable IP ranges, and split subnets in real time."
+    />
+
+    <!-- Theme Initialization (Default Dark Mode, Zero Flash) -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('mohit-subnet-theme');
+          var isDark = saved ? saved === 'dark' : true;
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (err) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+
+    <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- JSON-LD Structured Data (2026) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Mohit Tools — IPv4 Subnet Calculator & Visual CIDR Bit Explorer",
+        "url": "https://subnet.mohit-tools.com/",
+        "applicationCategory": "NetworkingApplication",
+        "operatingSystem": "Any",
+        "description": "Free visual IPv4 subnet calculator with interactive 32-bit binary blocks. Instantly calculate CIDR masks, wildcard masks, usable IP ranges, and split subnets in real time.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "featureList": [
+          "Interactive 32-bit binary bit matrix with click-to-flip bits",
+          "CIDR prefix slider from /1 to /32 with real-time network and host bit split",
+          "Dotted decimal and hex subnet mask plus Cisco ACL / OSPF wildcard mask",
+          "RFC 3021 /31 point-to-point and /32 single-host route support",
+          "Interactive subnet splitter into 2, 4, 8, or 16 equal subnets",
+          "Interactive CIDR reference chart from /8 to /32"
+        ],
+        "creator": {
+          "@type": "Organization",
+          "name": "Mohit Tools",
+          "url": "https://subnet.mohit-tools.com/"
+        }
+      }
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-83D8V0E26W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-83D8V0E26W');
+    </script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6956638858546916" crossorigin="anonymous"></script>
+    <!-- Cookie Consent CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+
+    <!-- FAQPage JSON-LD Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is CIDR notation and how do I read /24?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "CIDR (Classless Inter-Domain Routing) notation appends a slash and bit count to an IPv4 address, such as 192.168.1.0/24. The /24 prefix means the first 24 bits identify the network (subnet mask 255.255.255.0) and the remaining 8 bits identify hosts, yielding 256 total addresses and 254 usable host IPs."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do you calculate the number of usable hosts in a subnet?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Subtract the CIDR prefix length from 32 to find the number of host bits (h = 32 - prefix). Total addresses equal 2^h. For standard subnets (/1 through /30), subtract 2 for the Network Address and Broadcast Address, giving 2^h - 2 usable host addresses."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between a /30 and /31 subnet mask (RFC 3021)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A /30 subnet (255.255.255.252) provides 4 total addresses and 2 usable host IPs after reserving the network and broadcast addresses. Under RFC 3021, a /31 subnet (255.255.255.254) omits the broadcast address on point-to-point router links, allowing both of its 2 IP addresses to be assigned to endpoints and doubling address efficiency."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is a wildcard mask and how is it used in Cisco ACLs and OSPF?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A wildcard mask is the bitwise inverse of a subnet mask, found by subtracting each octet from 255 (for example, 255.255.255.0 becomes 0.0.0.255). In Cisco IOS Access Control Lists and OSPF network statements, a 0 bit requires an exact IP bit match while a 1 bit ignores that bit position."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which IPv4 address ranges are reserved for private networks (RFC 1918)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "RFC 1918 reserves three private IPv4 blocks that are not routable on the public Internet: 10.0.0.0/8 (16,777,216 addresses), 172.16.0.0/12 (1,048,576 addresses), and 192.168.0.0/16 (65,536 addresses)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why are the first and last IP addresses in a standard subnet reserved?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "In standard subnets from /1 to /30, the first address (all host bits set to 0) is the Network ID used by routers to identify the subnet, and the last address (all host bits set to 1) is the Broadcast Address used to deliver packets to every host on that subnet simultaneously."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What does a /32 subnet mask mean?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A /32 prefix corresponds to subnet mask 255.255.255.255, meaning all 32 bits are fixed as network bits and zero bits remain for hosts. It represents a single exact IPv4 host route, commonly used for loopback interfaces, firewall allowlists, and BGP /32 host advertisements."
+            }
+          }
+        ]
+      }
+    </script>
+
+    <style>
+      /* Range slider precision styling without external frameworks */
+      input[type='range'].cidr-range {
+        -webkit-appearance: none;
+        appearance: none;
+        background: transparent;
+        cursor: pointer;
+      }
+      input[type='range'].cidr-range::-webkit-slider-runnable-track {
+        height: 6px;
+        border-radius: 9999px;
+      }
+      input[type='range'].cidr-range::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 9999px;
+        background: #2563eb;
+        border: 2px solid #ffffff;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.35);
+        margin-top: -6px;
+        transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      html.dark input[type='range'].cidr-range::-webkit-slider-thumb {
+        background: #3b82f6;
+        border-color: #0f172a;
+      }
+      input[type='range'].cidr-range:hover::-webkit-slider-thumb {
+        transform: scale(1.12);
+      }
+      input[type='range'].cidr-range::-moz-range-thumb {
+        width: 18px;
+        height: 18px;
+        border-radius: 9999px;
+        background: #2563eb;
+        border: 2px solid #ffffff;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.35);
+      }
+      html.dark input[type='range'].cidr-range::-moz-range-thumb {
+        background: #3b82f6;
+        border-color: #0f172a;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased selection:bg-blue-500/20 selection:text-blue-700 dark:selection:text-blue-200">
+    <!-- Sticky Top Navbar: Brand on Left, Single Theme Toggle on Right -->
+    <header class="sticky top-0 z-40 border-b border-slate-200 dark:border-slate-800/90 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+        <a
+          href="#"
+          id="brand-home-link"
+          class="inline-flex items-center gap-2.5 text-slate-900 dark:text-slate-100 font-semibold tracking-tight whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-md"
+        >
+          <svg
+            class="w-6 h-6 text-blue-600 dark:text-blue-400 shrink-0"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <rect x="2.5" y="4" width="8" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8" />
+            <rect x="13.5" y="4" width="8" height="7" rx="1.5" stroke="#10b981" stroke-width="1.8" />
+            <rect x="2.5" y="13.5" width="4.5" height="6.5" rx="1" fill="currentColor" fill-opacity="0.2" stroke="currentColor" stroke-width="1.5" />
+            <rect x="9.75" y="13.5" width="4.5" height="6.5" rx="1" fill="currentColor" fill-opacity="0.2" stroke="currentColor" stroke-width="1.5" />
+            <rect x="17" y="13.5" width="4.5" height="6.5" rx="1" fill="#10b981" fill-opacity="0.2" stroke="#10b981" stroke-width="1.5" />
+          </svg>
+          <span class="text-sm sm:text-base">Mohit Tools — Subnet Visualizer</span>
+        </a>
+
+        <button
+          type="button"
+          id="theme-toggle-btn"
+          aria-label="Toggle Light/Dark Theme"
+          title="Switch theme"
+          class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+        >
+          <!-- Sun icon (shown in Dark Mode to switch to Light) -->
+          <svg id="icon-sun" class="w-5 h-5 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+          </svg>
+          <!-- Moon icon (shown in Light Mode to switch to Dark) -->
+          <svg id="icon-moon" class="w-5 h-5 block dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="top" class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-8">
+      <!-- Intro Header -->
+      <section class="space-y-2">
+        <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50" style="text-wrap: balance;">
+          IPv4 Subnet Calculator &amp; 32-Bit Binary Explorer
+        </h1>
+        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
+          Inspect how a 32-bit IPv4 address splits into network and host bits. Edit the CIDR address, drag the prefix slider, or click any bit below to recalculate masks and host ranges instantly.
+        </p>
+      </section>
+
+      <!-- Control Surface: Input, CIDR Slider, and Real-World Presets -->
+      <section class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 sm:p-6 space-y-5">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-start">
+          <!-- Primary IP / CIDR Input -->
+          <div class="md:col-span-6 space-y-2">
+            <label for="cidr-input" class="block text-sm font-medium text-slate-700 dark:text-slate-300">
+              IPv4 Address or CIDR Notation
+            </label>
+            <div class="relative flex items-center">
+              <input
+                id="cidr-input"
+                type="text"
+                inputmode="decimal"
+                autocomplete="off"
+                spellcheck="false"
+                value="192.168.1.10/24"
+                placeholder="e.g. 192.168.1.10/24"
+                aria-describedby="cidr-input-error"
+                class="w-full h-11 px-3.5 pr-20 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-mono tabular-nums text-base font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+              />
+              <button
+                type="button"
+                id="copy-cidr-btn"
+                class="absolute right-1.5 px-2.5 py-1.5 text-xs font-medium rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-200/70 dark:hover:bg-slate-800 transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                title="Copy full CIDR"
+              >
+                Copy
+              </button>
+            </div>
+            <p id="cidr-input-error" role="alert" class="text-xs font-medium text-red-600 dark:text-red-400 min-h-[1rem] hidden"></p>
+          </div>
+
+          <!-- CIDR Prefix Slider & Quick-Step Controls -->
+          <div class="md:col-span-6 space-y-2">
+            <div class="flex items-center justify-between gap-2">
+              <label for="cidr-slider" class="text-sm font-medium text-slate-700 dark:text-slate-300">
+                CIDR Prefix Length
+              </label>
+              <div class="flex items-center gap-2 font-mono tabular-nums text-sm">
+                <span id="cidr-readout" class="font-semibold text-blue-600 dark:text-blue-400">/24</span>
+                <span class="text-slate-400 dark:text-slate-600" aria-hidden="true">·</span>
+                <span id="mask-inline-readout" class="text-slate-600 dark:text-slate-400">255.255.255.0</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-2.5 h-11">
+              <button
+                type="button"
+                id="cidr-dec-btn"
+                aria-label="Decrease CIDR prefix"
+                class="w-10 h-10 inline-flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 font-mono text-base font-semibold transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                -
+              </button>
+              <div class="flex-1 flex items-center">
+                <input
+                  id="cidr-slider"
+                  type="range"
+                  min="1"
+                  max="32"
+                  step="1"
+                  value="24"
+                  aria-label="CIDR prefix slider from /1 to /32"
+                  class="cidr-range w-full rounded-full bg-slate-200 dark:bg-slate-800"
+                />
+              </div>
+              <button
+                type="button"
+                id="cidr-inc-btn"
+                aria-label="Increase CIDR prefix"
+                class="w-10 h-10 inline-flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 font-mono text-base font-semibold transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                +
+              </button>
+            </div>
+            <div class="flex justify-between text-[11px] font-mono tabular-nums text-slate-500 dark:text-slate-500 px-12">
+              <span>/1</span>
+              <span>/8</span>
+              <span>/16</span>
+              <span>/24</span>
+              <span>/32</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- One-Click Real-World Presets -->
+        <div class="pt-4 border-t border-slate-200 dark:border-slate-800 flex flex-wrap items-center gap-2">
+          <span class="text-xs font-medium text-slate-500 dark:text-slate-400 mr-1">Presets:</span>
+          <button
+            type="button"
+            data-preset="192.168.1.0/24"
+            class="preset-btn px-3 py-1.5 text-xs font-medium rounded-full border border-slate-200 dark:border-slate-700/90 bg-slate-50 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 hover:border-blue-500/60 hover:text-blue-700 dark:hover:text-blue-300 transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+          >
+            Home LAN <span class="font-mono tabular-nums opacity-75 ml-1">192.168.1.0/24</span>
+          </button>
+          <button
+            type="button"
+            data-preset="10.0.0.0/16"
+            class="preset-btn px-3 py-1.5 text-xs font-medium rounded-full border border-slate-200 dark:border-slate-700/90 bg-slate-50 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 hover:border-blue-500/60 hover:text-blue-700 dark:hover:text-blue-300 transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+          >
+            AWS VPC <span class="font-mono tabular-nums opacity-75 ml-1">10.0.0.0/16</span>
+          </button>
+          <button
+            type="button"
+            data-preset="172.17.0.0/16"
+            class="preset-btn px-3 py-1.5 text-xs font-medium rounded-full border border-slate-200 dark:border-slate-700/90 bg-slate-50 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 hover:border-blue-500/60 hover:text-blue-700 dark:hover:text-blue-300 transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+          >
+            Docker Bridge <span class="font-mono tabular-nums opacity-75 ml-1">172.17.0.0/16</span>
+          </button>
+          <button
+            type="button"
+            data-preset="10.0.0.0/30"
+            class="preset-btn px-3 py-1.5 text-xs font-medium rounded-full border border-slate-200 dark:border-slate-700/90 bg-slate-50 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 hover:border-blue-500/60 hover:text-blue-700 dark:hover:text-blue-300 transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+          >
+            Point-to-Point <span class="font-mono tabular-nums opacity-75 ml-1">10.0.0.0/30</span>
+          </button>
+          <button
+            type="button"
+            data-preset="8.8.8.8/32"
+            class="preset-btn px-3 py-1.5 text-xs font-medium rounded-full border border-slate-200 dark:border-slate-700/90 bg-slate-50 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 hover:border-blue-500/60 hover:text-blue-700 dark:hover:text-blue-300 transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+          >
+            Single Host <span class="font-mono tabular-nums opacity-75 ml-1">8.8.8.8/32</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Hero Feature: Interactive 32-Bit Binary Bit Matrix -->
+      <section aria-labelledby="bit-matrix-heading" class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 sm:p-6 space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div>
+            <h2 id="bit-matrix-heading" class="text-base sm:text-lg font-semibold text-slate-900 dark:text-slate-100">
+              32-Bit Binary Bit Matrix
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+              Click any bit to flip 0 and 1 in real time
+            </p>
+          </div>
+
+          <!-- Network vs Host Bit Count Legend -->
+          <div class="flex flex-wrap items-center gap-4 text-xs sm:text-sm font-medium">
+            <div class="inline-flex items-center gap-2">
+              <span class="w-3 h-3 rounded-sm bg-blue-600 dark:bg-blue-500 inline-block shrink-0" aria-hidden="true"></span>
+              <span id="legend-network-bits" class="font-mono tabular-nums text-slate-800 dark:text-slate-200">24 Network Bits</span>
+            </div>
+            <span class="text-slate-300 dark:text-slate-700" aria-hidden="true">|</span>
+            <div class="inline-flex items-center gap-2">
+              <span class="w-3 h-3 rounded-sm bg-emerald-600 dark:bg-emerald-500 inline-block shrink-0" aria-hidden="true"></span>
+              <span id="legend-host-bits" class="font-mono tabular-nums text-slate-800 dark:text-slate-200">8 Host Bits</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Proportional Network / Host Bit Allocation Bar -->
+        <div class="space-y-1.5">
+          <div class="h-2 w-full rounded-full overflow-hidden bg-slate-100 dark:bg-slate-800 flex" aria-hidden="true">
+            <div id="bit-bar-network" class="h-full bg-blue-600 dark:bg-blue-500 transition-[width] duration-150" style="width: 75%"></div>
+            <div id="bit-bar-host" class="h-full bg-emerald-600 dark:bg-emerald-500 transition-[width] duration-150" style="width: 25%"></div>
+          </div>
+        </div>
+
+        <!-- 4 Octet Grid -->
+        <div id="octet-matrix" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Octets 1 to 4 rendered cleanly via JS -->
+        </div>
+
+        <!-- Full 32-Bit Binary Readout Strip -->
+        <div class="pt-3 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-center gap-2 overflow-x-auto">
+            <span class="text-slate-500 dark:text-slate-400 font-medium shrink-0">Binary IP:</span>
+            <code id="binary-ip-string" class="font-mono tabular-nums text-slate-800 dark:text-slate-200 whitespace-nowrap">11000000.10101000.00000001.00001010</code>
+          </div>
+          <div class="flex items-center gap-2 overflow-x-auto">
+            <span class="text-slate-500 dark:text-slate-400 font-medium shrink-0">Binary Mask:</span>
+            <code id="binary-mask-string" class="font-mono tabular-nums text-slate-600 dark:text-slate-400 whitespace-nowrap">11111111.11111111.11111111.00000000</code>
+          </div>
+        </div>
+      </section>
+
+      <!-- Complete Network Telemetry Grid (6 Cards with 1-Click Copy) -->
+      <section aria-labelledby="telemetry-heading" class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 id="telemetry-heading" class="text-base sm:text-lg font-semibold text-slate-900 dark:text-slate-100">
+            Network Telemetry
+          </h2>
+          <button
+            type="button"
+            id="copy-summary-btn"
+            class="px-3 py-1.5 text-xs font-medium rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+          >
+            Copy All Telemetry
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- 1. Network Address -->
+          <article class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 flex flex-col justify-between gap-3">
+            <div class="flex items-start justify-between gap-2">
+              <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Network Address</span>
+              <button
+                type="button"
+                data-copy-target="val-network"
+                aria-label="Copy Network Address"
+                class="copy-btn inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              ></button>
+            </div>
+            <div>
+              <div id="val-network" class="font-mono tabular-nums text-lg sm:text-xl font-semibold text-slate-900 dark:text-slate-50">
+                192.168.1.0
+              </div>
+              <div id="sub-network" class="text-xs font-mono tabular-nums text-slate-500 dark:text-slate-400 mt-0.5">
+                CIDR Base: 192.168.1.0/24
+              </div>
+            </div>
+          </article>
+
+          <!-- 2. Broadcast Address -->
+          <article class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 flex flex-col justify-between gap-3">
+            <div class="flex items-start justify-between gap-2">
+              <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Broadcast Address</span>
+              <button
+                type="button"
+                data-copy-target="val-broadcast"
+                aria-label="Copy Broadcast Address"
+                class="copy-btn inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              ></button>
+            </div>
+            <div>
+              <div id="val-broadcast" class="font-mono tabular-nums text-lg sm:text-xl font-semibold text-slate-900 dark:text-slate-50">
+                192.168.1.255
+              </div>
+              <div id="sub-broadcast" class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                All host bits set to 1
+              </div>
+            </div>
+          </article>
+
+          <!-- 3. Subnet Mask -->
+          <article class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 flex flex-col justify-between gap-3">
+            <div class="flex items-start justify-between gap-2">
+              <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Subnet Mask</span>
+              <button
+                type="button"
+                data-copy-target="val-mask"
+                aria-label="Copy Subnet Mask"
+                class="copy-btn inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              ></button>
+            </div>
+            <div>
+              <div id="val-mask" class="font-mono tabular-nums text-lg sm:text-xl font-semibold text-slate-900 dark:text-slate-50">
+                255.255.255.0
+              </div>
+              <div id="sub-mask" class="text-xs font-mono tabular-nums text-slate-500 dark:text-slate-400 mt-0.5">
+                Hex: 0xFFFFFF00
+              </div>
+            </div>
+          </article>
+
+          <!-- 4. Wildcard Mask -->
+          <article class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 flex flex-col justify-between gap-3">
+            <div class="flex items-start justify-between gap-2">
+              <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Wildcard Mask (ACL / OSPF)</span>
+              <button
+                type="button"
+                data-copy-target="val-wildcard"
+                aria-label="Copy Wildcard Mask"
+                class="copy-btn inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              ></button>
+            </div>
+            <div>
+              <div id="val-wildcard" class="font-mono tabular-nums text-lg sm:text-xl font-semibold text-slate-900 dark:text-slate-50">
+                0.0.0.255
+              </div>
+              <div id="sub-wildcard" class="text-xs font-mono tabular-nums text-slate-500 dark:text-slate-400 mt-0.5">
+                Inverse Hex: 0x000000FF
+              </div>
+            </div>
+          </article>
+
+          <!-- 5. Usable Host IP Range -->
+          <article class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 flex flex-col justify-between gap-3">
+            <div class="flex items-start justify-between gap-2">
+              <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Usable Host IP Range</span>
+              <button
+                type="button"
+                data-copy-target="val-range"
+                aria-label="Copy Usable Host Range"
+                class="copy-btn inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              ></button>
+            </div>
+            <div>
+              <div id="val-range" class="font-mono tabular-nums text-base sm:text-lg font-semibold text-slate-900 dark:text-slate-50 break-words">
+                192.168.1.1 – 192.168.1.254
+              </div>
+              <div id="sub-range" class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                First to last assignable host address
+              </div>
+            </div>
+          </article>
+
+          <!-- 6. Capacity & IP Class / Scope -->
+          <article class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 flex flex-col justify-between gap-3">
+            <div class="flex items-start justify-between gap-2">
+              <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Capacity &amp; IP Scope</span>
+              <button
+                type="button"
+                data-copy-target="val-capacity"
+                aria-label="Copy Host Capacity"
+                class="copy-btn inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              ></button>
+            </div>
+            <div>
+              <div id="val-capacity" class="font-mono tabular-nums text-lg sm:text-xl font-semibold text-slate-900 dark:text-slate-50">
+                254 Usable Hosts
+              </div>
+              <div id="sub-capacity" class="text-xs text-slate-600 dark:text-slate-300 mt-1 flex flex-wrap items-center gap-x-2 gap-y-1">
+                <span id="meta-total" class="font-mono tabular-nums">256 Total</span>
+                <span class="text-slate-400 dark:text-slate-600" aria-hidden="true">·</span>
+                <span id="meta-class">Class C</span>
+                <span class="text-slate-400 dark:text-slate-600" aria-hidden="true">·</span>
+                <span id="meta-scope" class="font-medium text-emerald-700 dark:text-emerald-400">Private (RFC 1918)</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Interactive Subnet Splitter Panel -->
+      <section aria-labelledby="splitter-heading" class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden">
+        <div class="p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800">
+          <div class="space-y-0.5">
+            <h2 id="splitter-heading" class="text-base sm:text-lg font-semibold text-slate-900 dark:text-slate-100">
+              Subnet Splitter
+            </h2>
+            <p id="splitter-subtitle" class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+              Divide <span class="font-mono tabular-nums text-slate-700 dark:text-slate-300">192.168.1.0/24</span> into equal child networks
+            </p>
+          </div>
+
+          <div class="flex items-center gap-2 flex-wrap">
+            <div class="inline-flex items-center p-1 rounded-lg bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800" role="group" aria-label="Split into equal subnets">
+              <button type="button" data-split="2" class="split-tab px-3 py-1.5 text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                2 Subnets
+              </button>
+              <button type="button" data-split="4" class="split-tab px-3 py-1.5 text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                4 Subnets
+              </button>
+              <button type="button" data-split="8" class="split-tab px-3 py-1.5 text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                8 Subnets
+              </button>
+              <button type="button" data-split="16" class="split-tab px-3 py-1.5 text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                16 Subnets
+              </button>
+            </div>
+            <button
+              type="button"
+              id="toggle-splitter-btn"
+              aria-expanded="true"
+              aria-controls="splitter-body"
+              class="px-3 py-2 text-xs font-medium rounded-lg border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            >
+              Hide
+            </button>
+          </div>
+        </div>
+
+        <div id="splitter-body">
+          <div id="splitter-empty" class="hidden p-6 text-center text-sm text-slate-600 dark:text-slate-400"></div>
+          <div id="splitter-table-wrap" class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs sm:text-sm">
+              <thead>
+                <tr class="border-b border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-950/60 text-slate-500 dark:text-slate-400 font-medium">
+                  <th class="py-2.5 px-4 whitespace-nowrap">#</th>
+                  <th class="py-2.5 px-4 whitespace-nowrap">Subnet CIDR</th>
+                  <th class="py-2.5 px-4 whitespace-nowrap">Network ID</th>
+                  <th class="py-2.5 px-4 whitespace-nowrap">Usable Host Range</th>
+                  <th class="py-2.5 px-4 whitespace-nowrap">Broadcast</th>
+                  <th class="py-2.5 px-4 text-right whitespace-nowrap">Action</th>
+                </tr>
+              </thead>
+              <tbody id="splitter-tbody" class="divide-y divide-slate-200 dark:divide-slate-800 font-mono tabular-nums">
+                <!-- Child subnet rows rendered via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive CIDR & Subnet Mask Reference Chart (/8 to /32) -->
+      <section aria-labelledby="cidr-chart-heading" class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden">
+        <div class="p-5 sm:p-6 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <h2 id="cidr-chart-heading" class="text-base sm:text-lg font-semibold text-slate-900 dark:text-slate-100">
+              CIDR &amp; Subnet Mask Reference Chart (/8 to /32)
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+              Click any prefix row to apply that subnet mask in the visualizer above
+            </p>
+          </div>
+          <span class="text-xs font-mono tabular-nums text-slate-500 dark:text-slate-400">
+            Active: <strong id="chart-active-cidr" class="text-blue-600 dark:text-blue-400">/24</strong>
+          </span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs sm:text-sm">
+            <thead>
+              <tr class="border-b border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-950/60 text-slate-500 dark:text-slate-400 font-medium">
+                <th class="py-2.5 px-4 whitespace-nowrap">CIDR</th>
+                <th class="py-2.5 px-4 whitespace-nowrap">Subnet Mask</th>
+                <th class="py-2.5 px-4 whitespace-nowrap">Wildcard Mask</th>
+                <th class="py-2.5 px-4 text-right whitespace-nowrap">Total IPs</th>
+                <th class="py-2.5 px-4 text-right whitespace-nowrap">Usable Hosts</th>
+              </tr>
+            </thead>
+            <tbody id="cidr-reference-tbody" class="divide-y divide-slate-200 dark:divide-slate-800 font-mono tabular-nums">
+              <!-- /8 through /32 rows rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 4-Part SEO Guide & 7-Item FAQ Accordion -->
+      <section aria-labelledby="guide-heading" class="space-y-8">
+        <div class="space-y-4">
+          <div class="space-y-1">
+            <h2 id="guide-heading" class="text-base sm:text-lg font-semibold text-slate-900 dark:text-slate-100">
+              Complete IPv4 Subnetting &amp; CIDR Guide
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+              Core networking concepts behind binary bit boundaries, RFC 1918 private blocks, ACL wildcard masks, and VLSM subnet splitting.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <article class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 space-y-2">
+              <h3 class="text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-100">
+                1. How CIDR Notation &amp; Subnet Masks Work
+              </h3>
+              <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                Classless Inter-Domain Routing (CIDR) appends a slash prefix such as <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">/24</span> to an IPv4 address to specify how many leading bits belong to the network prefix. The remaining <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">32 &minus; prefix</span> bits identify hosts inside that subnet, enabling flexible block sizing beyond legacy Class A, B, and C boundaries.
+              </p>
+            </article>
+
+            <article class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 space-y-2">
+              <h3 class="text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-100">
+                2. Private IPv4 Ranges (RFC 1918) &amp; Special Scopes
+              </h3>
+              <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                RFC 1918 reserves <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">10.0.0.0/8</span>, <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">172.16.0.0/12</span>, and <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">192.168.0.0/16</span> for private LANs, cloud VPCs, and container bridges. Special scopes include Loopback (<span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">127.0.0.0/8</span>), Carrier-Grade NAT (<span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">100.64.0.0/10</span>), and Link-Local (<span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">169.254.0.0/16</span>).
+              </p>
+            </article>
+
+            <article class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 space-y-2">
+              <h3 class="text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-100">
+                3. Wildcard Masks in Cisco ACLs &amp; OSPF
+              </h3>
+              <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                A wildcard mask is the bitwise inverse of a subnet mask, calculated by subtracting each octet from <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">255</span>. In Cisco IOS ACLs and OSPF network statements, a <span class="font-mono text-slate-800 dark:text-slate-200">0</span> bit enforces an exact match while a <span class="font-mono text-slate-800 dark:text-slate-200">1</span> bit acts as a don&apos;t-care bit—for instance, <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">0.0.0.255</span> matches an entire <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">/24</span> block.
+              </p>
+            </article>
+
+            <article class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 space-y-2">
+              <h3 class="text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-100">
+                4. Subnetting, VLSM &amp; Point-to-Point Links (/30, /31, /32)
+              </h3>
+              <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                Borrowing <span class="font-mono text-slate-800 dark:text-slate-200">n</span> host bits divides a parent network into <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">2^n</span> equal subnets. For router-to-router links, <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">/30</span> yields 2 usable hosts out of 4 IPs, whereas RFC 3021 <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">/31</span> assigns both addresses without broadcast overhead. Use <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">/32</span> for exact single-host routes.
+              </p>
+            </article>
+          </div>
+        </div>
+
+        <!-- 7-Item FAQ Accordion -->
+        <div id="faq-section" class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden">
+          <div class="p-5 sm:p-6 border-b border-slate-200 dark:border-slate-800">
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 dark:text-slate-100">
+              Frequently Asked Questions
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+              Quick answers to common IPv4 CIDR, subnet mask, and routing questions
+            </p>
+          </div>
+
+          <div class="divide-y divide-slate-200 dark:divide-slate-800">
+            <details class="group p-5" open>
+              <summary class="flex items-center justify-between gap-4 cursor-pointer list-none text-sm sm:text-base font-medium text-slate-900 dark:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded">
+                <span>What is CIDR notation and how do I read /24?</span>
+                <svg class="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0 transition-transform duration-150 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <p class="mt-2.5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                CIDR (Classless Inter-Domain Routing) notation appends a slash and bit count to an IPv4 address, such as <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">192.168.1.0/24</span>. The <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">/24</span> prefix means the first 24 bits identify the network (subnet mask <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">255.255.255.0</span>) and the remaining 8 bits identify hosts, yielding 256 total addresses and 254 usable host IPs.
+              </p>
+            </details>
+
+            <details class="group p-5">
+              <summary class="flex items-center justify-between gap-4 cursor-pointer list-none text-sm sm:text-base font-medium text-slate-900 dark:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded">
+                <span>How do you calculate the number of usable hosts in a subnet?</span>
+                <svg class="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0 transition-transform duration-150 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <p class="mt-2.5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                Subtract the CIDR prefix length from 32 to find the number of host bits (<span class="font-mono text-slate-800 dark:text-slate-200">h = 32 &minus; prefix</span>). Total addresses equal <span class="font-mono text-slate-800 dark:text-slate-200">2^h</span>. For standard subnets (<span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">/1</span> through <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">/30</span>), subtract 2 for the Network Address and Broadcast Address, giving <span class="font-mono text-slate-800 dark:text-slate-200">2^h &minus; 2</span> usable host addresses.
+              </p>
+            </details>
+
+            <details class="group p-5">
+              <summary class="flex items-center justify-between gap-4 cursor-pointer list-none text-sm sm:text-base font-medium text-slate-900 dark:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded">
+                <span>What is the difference between a /30 and /31 subnet mask (RFC 3021)?</span>
+                <svg class="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0 transition-transform duration-150 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <p class="mt-2.5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                A <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">/30</span> subnet (<span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">255.255.255.252</span>) provides 4 total addresses and 2 usable host IPs after reserving the network and broadcast addresses. Under RFC 3021, a <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">/31</span> subnet (<span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">255.255.255.254</span>) omits the broadcast address on point-to-point router links, allowing both of its 2 IP addresses to be assigned to endpoints and doubling address efficiency.
+              </p>
+            </details>
+
+            <details class="group p-5">
+              <summary class="flex items-center justify-between gap-4 cursor-pointer list-none text-sm sm:text-base font-medium text-slate-900 dark:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded">
+                <span>What is a wildcard mask and how is it used in Cisco ACLs and OSPF?</span>
+                <svg class="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0 transition-transform duration-150 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <p class="mt-2.5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                A wildcard mask is the bitwise inverse of a subnet mask, found by subtracting each octet from 255 (for example, <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">255.255.255.0</span> becomes <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">0.0.0.255</span>). In Cisco IOS Access Control Lists and OSPF network statements, a <span class="font-mono text-slate-800 dark:text-slate-200">0</span> bit requires an exact IP bit match while a <span class="font-mono text-slate-800 dark:text-slate-200">1</span> bit ignores that bit position.
+              </p>
+            </details>
+
+            <details class="group p-5">
+              <summary class="flex items-center justify-between gap-4 cursor-pointer list-none text-sm sm:text-base font-medium text-slate-900 dark:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded">
+                <span>Which IPv4 address ranges are reserved for private networks (RFC 1918)?</span>
+                <svg class="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0 transition-transform duration-150 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <p class="mt-2.5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                RFC 1918 reserves three private IPv4 blocks that are not routable on the public Internet: <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">10.0.0.0/8</span> (16,777,216 addresses), <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">172.16.0.0/12</span> (1,048,576 addresses), and <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">192.168.0.0/16</span> (65,536 addresses).
+              </p>
+            </details>
+
+            <details class="group p-5">
+              <summary class="flex items-center justify-between gap-4 cursor-pointer list-none text-sm sm:text-base font-medium text-slate-900 dark:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded">
+                <span>Why are the first and last IP addresses in a standard subnet reserved?</span>
+                <svg class="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0 transition-transform duration-150 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <p class="mt-2.5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                In standard subnets from <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">/1</span> to <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">/30</span>, the first address (all host bits set to <span class="font-mono text-slate-800 dark:text-slate-200">0</span>) is the Network ID used by routers to identify the subnet, and the last address (all host bits set to <span class="font-mono text-slate-800 dark:text-slate-200">1</span>) is the Broadcast Address used to deliver packets to every host on that subnet simultaneously.
+              </p>
+            </details>
+
+            <details class="group p-5">
+              <summary class="flex items-center justify-between gap-4 cursor-pointer list-none text-sm sm:text-base font-medium text-slate-900 dark:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded">
+                <span>What does a /32 subnet mask mean?</span>
+                <svg class="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0 transition-transform duration-150 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <p class="mt-2.5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                A <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">/32</span> prefix corresponds to subnet mask <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">255.255.255.255</span>, meaning all 32 bits are fixed as network bits and zero bits remain for hosts. It represents a single exact IPv4 host route, commonly used for loopback interfaces, firewall allowlists, and BGP <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">/32</span> host advertisements.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Centered Footer with Legal Links -->
+    <footer class="border-t border-slate-200 dark:border-slate-800 mt-10">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 py-8 text-center space-y-2.5">
+        <p class="text-sm text-slate-600 dark:text-slate-400">
+          &copy; 2026 <a href="https://subnet.mohit-tools.com/" class="font-medium text-slate-800 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Mohit Tools</a>. All rights reserved.
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-slate-500 dark:text-slate-400">
+          <a href="#top" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors">Calculator</a>
+          <span aria-hidden="true">&middot;</span>
+          <a href="#cidr-chart-heading" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors">CIDR Reference</a>
+          <span aria-hidden="true">&middot;</span>
+          <a href="#guide-heading" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors">Subnetting Guide</a>
+          <span aria-hidden="true">&middot;</span>
+          <a href="#faq-section" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors">FAQ</a>
+        </div>
+        <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-slate-500 dark:text-slate-400">
+          <a href="about.html" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors">About</a>
+          <span aria-hidden="true">&middot;</span>
+          <a href="privacy.html" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors">Privacy Policy</a>
+          <span aria-hidden="true">&middot;</span>
+          <a href="terms.html" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors">Terms of Service</a>
+          <span aria-hidden="true">&middot;</span>
+          <a href="contact.html" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Subtle Copy Toast -->
+    <div
+      id="copy-toast"
+      role="status"
+      aria-live="polite"
+      class="pointer-events-none fixed bottom-5 right-5 z-50 px-3.5 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-xs font-medium shadow-lg opacity-0 translate-y-2 transition-all duration-150"
+    >
+      Copied to clipboard
+    </div>
+
+    <!-- Modular Vanilla JavaScript (Pure 32-Bit Unsigned Bitwise Engine) -->
+    <script>
+      (function () {
+        'use strict';
+
+        // =====================================================================
+        // 1. PURE 32-BIT UNSIGNED BITWISE MATH MODULE
+        // =====================================================================
+        const BIT_WEIGHTS = [128, 64, 32, 16, 8, 4, 2, 1];
+
+        function intToOctets(int32) {
+          const u = int32 >>> 0;
+          return [(u >>> 24) & 255, (u >>> 16) & 255, (u >>> 8) & 255, u & 255];
+        }
+
+        function intToIp(int32) {
+          return intToOctets(int32).join('.');
+        }
+
+        function octetsToInt(octets) {
+          return (
+            ((octets[0] & 255) << 24) |
+            ((octets[1] & 255) << 16) |
+            ((octets[2] & 255) << 8) |
+            (octets[3] & 255)
+          ) >>> 0;
+        }
+
+        function intToHex(int32) {
+          return '0x' + (int32 >>> 0).toString(16).toUpperCase().padStart(8, '0');
+        }
+
+        function intToBinaryDotted(int32) {
+          return intToOctets(int32)
+            .map(function (o) {
+              return o.toString(2).padStart(8, '0');
+            })
+            .join('.');
+        }
+
+        function cidrToMaskInt(cidr) {
+          if (cidr <= 0) return 0;
+          if (cidr >= 32) return 0xffffffff >>> 0;
+          return (0xffffffff << (32 - cidr)) >>> 0;
+        }
+
+        function getBit(int32, bitIndex) {
+          return ((int32 >>> (31 - bitIndex)) & 1) >>> 0;
+        }
+
+        function flipBit(int32, bitIndex) {
+          return (int32 ^ (1 << (31 - bitIndex))) >>> 0;
+        }
+
+        function getIpClass(firstOctet) {
+          if (firstOctet < 128) return 'Class A';
+          if (firstOctet < 192) return 'Class B';
+          if (firstOctet < 224) return 'Class C';
+          if (firstOctet < 240) return 'Class D (Multicast)';
+          return 'Class E (Experimental)';
+        }
+
+        function getIpScope(ipInt) {
+          const o = intToOctets(ipInt);
+          const a = o[0];
+          const b = o[1];
+          const c = o[2];
+
+          if (a === 10) return 'Private (RFC 1918)';
+          if (a === 172 && b >= 16 && b <= 31) return 'Private (RFC 1918)';
+          if (a === 192 && b === 168) return 'Private (RFC 1918)';
+          if (a === 127) return 'Loopback (127.0.0.0/8)';
+          if (a === 100 && b >= 64 && b <= 127) return 'CGNAT (100.64.0.0/10)';
+          if (a === 169 && b === 254) return 'Link-Local (169.254.0.0/16)';
+          if (a === 0) return 'This Network (0.0.0.0/8)';
+          if (a >= 224 && a <= 239) return 'Multicast (224.0.0.0/4)';
+          if (a >= 240) return 'Reserved (240.0.0.0/4)';
+          if (
+            (a === 192 && b === 0 && c === 2) ||
+            (a === 198 && b === 51 && c === 100) ||
+            (a === 203 && b === 0 && c === 113)
+          ) {
+            return 'Documentation (RFC 5737)';
+          }
+          return 'Public Internet';
+        }
+
+        function calculateSubnet(ipInt, cidr) {
+          const uIp = ipInt >>> 0;
+          const maskInt = cidrToMaskInt(cidr);
+          const wildcardInt = (~maskInt) >>> 0;
+          const networkInt = (uIp & maskInt) >>> 0;
+          const broadcastInt = (networkInt | wildcardInt) >>> 0;
+          const totalAddresses = Math.pow(2, 32 - cidr);
+
+          let usableHosts;
+          let firstUsableInt;
+          let lastUsableInt;
+
+          if (cidr === 32) {
+            usableHosts = 1;
+            firstUsableInt = networkInt;
+            lastUsableInt = networkInt;
+          } else if (cidr === 31) {
+            // RFC 3021 Point-to-Point Link
+            usableHosts = 2;
+            firstUsableInt = networkInt;
+            lastUsableInt = broadcastInt;
+          } else {
+            usableHosts = Math.max(0, totalAddresses - 2);
+            firstUsableInt = (networkInt + 1) >>> 0;
+            lastUsableInt = (broadcastInt - 1) >>> 0;
+          }
+
+          const firstOctet = (uIp >>> 24) & 255;
+
+          return {
+            ipInt: uIp,
+            cidr: cidr,
+            ipStr: intToIp(uIp),
+            maskInt: maskInt,
+            maskStr: intToIp(maskInt),
+            maskHex: intToHex(maskInt),
+            wildcardInt: wildcardInt,
+            wildcardStr: intToIp(wildcardInt),
+            wildcardHex: intToHex(wildcardInt),
+            networkInt: networkInt,
+            networkStr: intToIp(networkInt),
+            broadcastInt: broadcastInt,
+            broadcastStr: intToIp(broadcastInt),
+            totalAddresses: totalAddresses,
+            usableHosts: usableHosts,
+            firstUsableInt: firstUsableInt,
+            lastUsableInt: lastUsableInt,
+            firstUsableStr: intToIp(firstUsableInt),
+            lastUsableStr: intToIp(lastUsableInt),
+            ipClass: getIpClass(firstOctet),
+            ipScope: getIpScope(uIp),
+          };
+        }
+
+        function parseCidrString(raw, fallbackCidr) {
+          const trimmed = String(raw || '').trim();
+          if (!trimmed) {
+            return { valid: false, error: 'Enter an IPv4 address (e.g., 192.168.1.10/24).' };
+          }
+
+          const slashParts = trimmed.split('/');
+          if (slashParts.length > 2) {
+            return { valid: false, error: 'Use a single slash for CIDR notation (e.g., 10.0.0.0/16).' };
+          }
+
+          const ipPart = slashParts[0].trim();
+          const octetStrings = ipPart.split('.');
+          if (octetStrings.length !== 4) {
+            return { valid: false, error: 'IPv4 addresses must contain exactly 4 octets separated by dots.' };
+          }
+
+          const octets = [];
+          for (let i = 0; i < 4; i++) {
+            const s = octetStrings[i];
+            if (!/^\d{1,3}$/.test(s)) {
+              return { valid: false, error: 'Octet ' + (i + 1) + ' must be a whole number from 0 to 255.' };
+            }
+            const n = Number(s);
+            if (n < 0 || n > 255) {
+              return { valid: false, error: 'Octet ' + (i + 1) + ' (' + s + ') exceeds 255.' };
+            }
+            octets.push(n);
+          }
+
+          let cidr = fallbackCidr;
+          let hasExplicitCidr = false;
+          if (slashParts.length === 2) {
+            const prefixStr = slashParts[1].trim();
+            if (!/^\d{1,2}$/.test(prefixStr)) {
+              return { valid: false, error: 'CIDR prefix must be an integer between /1 and /32.' };
+            }
+            const parsedPrefix = Number(prefixStr);
+            if (parsedPrefix < 1 || parsedPrefix > 32) {
+              return { valid: false, error: 'CIDR prefix /' + parsedPrefix + ' is out of range (/1 to /32).' };
+            }
+            cidr = parsedPrefix;
+            hasExplicitCidr = true;
+          }
+
+          return {
+            valid: true,
+            ipInt: octetsToInt(octets),
+            cidr: cidr,
+            hasExplicitCidr: hasExplicitCidr,
+          };
+        }
+
+        // =====================================================================
+        // 2. APPLICATION STATE & DOM REFERENCES
+        // =====================================================================
+        const state = {
+          ipInt: octetsToInt([192, 168, 1, 10]),
+          cidr: 24,
+          splitCount: 2,
+          splitterOpen: true,
+        };
+
+        const els = {
+          themeToggleBtn: document.getElementById('theme-toggle-btn'),
+          brandHomeLink: document.getElementById('brand-home-link'),
+          cidrInput: document.getElementById('cidr-input'),
+          cidrInputError: document.getElementById('cidr-input-error'),
+          copyCidrBtn: document.getElementById('copy-cidr-btn'),
+          cidrSlider: document.getElementById('cidr-slider'),
+          cidrDecBtn: document.getElementById('cidr-dec-btn'),
+          cidrIncBtn: document.getElementById('cidr-inc-btn'),
+          cidrReadout: document.getElementById('cidr-readout'),
+          maskInlineReadout: document.getElementById('mask-inline-readout'),
+          octetMatrix: document.getElementById('octet-matrix'),
+          legendNetworkBits: document.getElementById('legend-network-bits'),
+          legendHostBits: document.getElementById('legend-host-bits'),
+          bitBarNetwork: document.getElementById('bit-bar-network'),
+          bitBarHost: document.getElementById('bit-bar-host'),
+          binaryIpString: document.getElementById('binary-ip-string'),
+          binaryMaskString: document.getElementById('binary-mask-string'),
+          valNetwork: document.getElementById('val-network'),
+          subNetwork: document.getElementById('sub-network'),
+          valBroadcast: document.getElementById('val-broadcast'),
+          subBroadcast: document.getElementById('sub-broadcast'),
+          valMask: document.getElementById('val-mask'),
+          subMask: document.getElementById('sub-mask'),
+          valWildcard: document.getElementById('val-wildcard'),
+          subWildcard: document.getElementById('sub-wildcard'),
+          valRange: document.getElementById('val-range'),
+          subRange: document.getElementById('sub-range'),
+          valCapacity: document.getElementById('val-capacity'),
+          metaTotal: document.getElementById('meta-total'),
+          metaClass: document.getElementById('meta-class'),
+          metaScope: document.getElementById('meta-scope'),
+          copySummaryBtn: document.getElementById('copy-summary-btn'),
+          splitterSubtitle: document.getElementById('splitter-subtitle'),
+          splitterBody: document.getElementById('splitter-body'),
+          splitterEmpty: document.getElementById('splitter-empty'),
+          splitterTableWrap: document.getElementById('splitter-table-wrap'),
+          splitterTbody: document.getElementById('splitter-tbody'),
+          toggleSplitterBtn: document.getElementById('toggle-splitter-btn'),
+          chartActiveCidr: document.getElementById('chart-active-cidr'),
+          cidrReferenceTbody: document.getElementById('cidr-reference-tbody'),
+          copyToast: document.getElementById('copy-toast'),
+        };
+
+        const ICON_COPY =
+          '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span>';
+        const ICON_CHECK =
+          '<svg class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="text-emerald-600 dark:text-emerald-400 font-medium">Copied!</span>';
+
+        // =====================================================================
+        // 3. CLIPBOARD & TOAST HELPERS
+        // =====================================================================
+        let toastTimer = null;
+
+        function showToast(message) {
+          els.copyToast.textContent = message;
+          els.copyToast.classList.remove('opacity-0', 'translate-y-2');
+          els.copyToast.classList.add('opacity-100', 'translate-y-0');
+          clearTimeout(toastTimer);
+          toastTimer = setTimeout(function () {
+            els.copyToast.classList.add('opacity-0', 'translate-y-2');
+            els.copyToast.classList.remove('opacity-100', 'translate-y-0');
+          }, 1600);
+        }
+
+        function copyText(text, triggerButton, toastMessage) {
+          function onSuccess() {
+            showToast(toastMessage || 'Copied ' + text);
+            if (triggerButton) {
+              if (!triggerButton.dataset.origHtml) {
+                triggerButton.dataset.origHtml = triggerButton.innerHTML;
+              }
+              const isIconBtn = triggerButton.classList.contains('copy-btn');
+              triggerButton.innerHTML = isIconBtn ? ICON_CHECK : 'Copied!';
+              clearTimeout(triggerButton._resetTimer);
+              triggerButton._resetTimer = setTimeout(function () {
+                triggerButton.innerHTML = isIconBtn ? ICON_COPY : triggerButton.dataset.origHtml;
+              }, 1400);
+            }
+          }
+
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(onSuccess).catch(fallbackCopy);
+          } else {
+            fallbackCopy();
+          }
+
+          function fallbackCopy() {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.setAttribute('readonly', '');
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+              document.execCommand('copy');
+              onSuccess();
+            } catch (e) {
+              showToast('Press Ctrl+C to copy');
+            }
+            document.body.removeChild(ta);
+          }
+        }
+
+        // =====================================================================
+        // 4. RENDERING FUNCTIONS
+        // =====================================================================
+        function buildOctetMatrixShell() {
+          let html = '';
+          for (let octetIdx = 0; octetIdx < 4; octetIdx++) {
+            html +=
+              '<div class="rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-950/60 p-3.5 space-y-2.5">' +
+              '  <div class="flex items-center justify-between text-xs">' +
+              '    <span class="font-medium text-slate-500 dark:text-slate-400">Octet ' + (octetIdx + 1) + '</span>' +
+              '    <div class="flex items-center gap-2 font-mono tabular-nums">' +
+              '      <span id="octet-hex-' + octetIdx + '" class="text-slate-400 dark:text-slate-500">0x00</span>' +
+              '      <span id="octet-dec-' + octetIdx + '" class="px-2 py-0.5 rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 font-semibold text-slate-900 dark:text-slate-100">0</span>' +
+              '    </div>' +
+              '  </div>' +
+              '  <div class="grid grid-cols-8 gap-1.5">';
+
+            for (let bitInOctet = 0; bitInOctet < 8; bitInOctet++) {
+              const globalBit = octetIdx * 8 + bitInOctet;
+              html +=
+                '<div class="flex flex-col items-center gap-1">' +
+                '  <button type="button" data-bit-index="' + globalBit + '" ' +
+                '    aria-label="Bit ' + (globalBit + 1) + ', weight ' + BIT_WEIGHTS[bitInOctet] + '" ' +
+                '    class="bit-btn w-full h-10 sm:h-11 rounded-md border font-mono tabular-nums text-sm sm:text-base font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 flex items-center justify-center">' +
+                '    0' +
+                '  </button>' +
+                '  <span class="text-[10px] font-mono tabular-nums text-slate-500 dark:text-slate-500 select-none">' + BIT_WEIGHTS[bitInOctet] + '</span>' +
+                '</div>';
+            }
+
+            html += '  </div></div>';
+          }
+          els.octetMatrix.innerHTML = html;
+        }
+
+        function renderBitMatrix(calc) {
+          const octets = intToOctets(calc.ipInt);
+          for (let i = 0; i < 4; i++) {
+            document.getElementById('octet-dec-' + i).textContent = String(octets[i]);
+            document.getElementById('octet-hex-' + i).textContent =
+              '0x' + octets[i].toString(16).toUpperCase().padStart(2, '0');
+          }
+
+          const bitButtons = els.octetMatrix.querySelectorAll('.bit-btn');
+          for (let idx = 0; idx < bitButtons.length; idx++) {
+            const btn = bitButtons[idx];
+            const bitVal = getBit(calc.ipInt, idx);
+            const isNetwork = idx < calc.cidr;
+
+            btn.textContent = String(bitVal);
+            btn.setAttribute('aria-pressed', bitVal === 1 ? 'true' : 'false');
+            btn.title =
+              (isNetwork ? 'Network Bit' : 'Host Bit') +
+              ' #' + (idx + 1) + ' (Value: ' + bitVal + ') — Click to flip';
+
+            if (isNetwork) {
+              if (bitVal === 1) {
+                btn.className =
+                  'bit-btn w-full h-10 sm:h-11 rounded-md border font-mono tabular-nums text-sm sm:text-base font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 flex items-center justify-center bg-blue-600 dark:bg-blue-500 border-blue-700 dark:border-blue-400 text-white hover:bg-blue-700 dark:hover:bg-blue-400';
+              } else {
+                btn.className =
+                  'bit-btn w-full h-10 sm:h-11 rounded-md border font-mono tabular-nums text-sm sm:text-base font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 flex items-center justify-center bg-blue-50 dark:bg-blue-950/50 border-blue-300 dark:border-blue-700/80 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/60';
+              }
+            } else {
+              if (bitVal === 1) {
+                btn.className =
+                  'bit-btn w-full h-10 sm:h-11 rounded-md border font-mono tabular-nums text-sm sm:text-base font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 flex items-center justify-center bg-emerald-600 dark:bg-emerald-500 border-emerald-700 dark:border-emerald-400 text-white hover:bg-emerald-700 dark:hover:bg-emerald-400';
+              } else {
+                btn.className =
+                  'bit-btn w-full h-10 sm:h-11 rounded-md border font-mono tabular-nums text-sm sm:text-base font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 flex items-center justify-center bg-emerald-50 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-700/70 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/50';
+              }
+            }
+          }
+
+          const netBits = calc.cidr;
+          const hostBits = 32 - calc.cidr;
+          els.legendNetworkBits.textContent = netBits + (netBits === 1 ? ' Network Bit' : ' Network Bits');
+          els.legendHostBits.textContent = hostBits + (hostBits === 1 ? ' Host Bit' : ' Host Bits');
+
+          const netPct = (netBits / 32) * 100;
+          els.bitBarNetwork.style.width = netPct + '%';
+          els.bitBarHost.style.width = 100 - netPct + '%';
+
+          els.binaryIpString.textContent = intToBinaryDotted(calc.ipInt);
+          els.binaryMaskString.textContent = intToBinaryDotted(calc.maskInt);
+        }
+
+        function renderTelemetry(calc) {
+          els.valNetwork.textContent = calc.networkStr;
+          els.subNetwork.textContent = 'CIDR Base: ' + calc.networkStr + '/' + calc.cidr;
+
+          if (calc.cidr === 32) {
+            els.valBroadcast.textContent = 'None (/32 Host)';
+            els.valBroadcast.dataset.copyValue = calc.networkStr;
+            els.subBroadcast.textContent = 'Single-host route has no broadcast';
+          } else if (calc.cidr === 31) {
+            els.valBroadcast.textContent = 'None (RFC 3021)';
+            els.valBroadcast.dataset.copyValue = calc.broadcastStr;
+            els.subBroadcast.textContent = 'Point-to-point link (' + calc.broadcastStr + ' is usable)';
+          } else {
+            els.valBroadcast.textContent = calc.broadcastStr;
+            els.valBroadcast.dataset.copyValue = calc.broadcastStr;
+            els.subBroadcast.textContent = 'All ' + (32 - calc.cidr) + ' host bits set to 1';
+          }
+
+          els.valMask.textContent = calc.maskStr;
+          els.subMask.textContent = 'Hex: ' + calc.maskHex;
+
+          els.valWildcard.textContent = calc.wildcardStr;
+          els.subWildcard.textContent = 'Inverse Hex: ' + calc.wildcardHex;
+
+          if (calc.cidr === 32) {
+            els.valRange.textContent = calc.firstUsableStr;
+            els.subRange.textContent = 'Single assignable host route (/32)';
+          } else if (calc.cidr === 31) {
+            els.valRange.textContent = calc.firstUsableStr + ' – ' + calc.lastUsableStr;
+            els.subRange.textContent = 'RFC 3021 point-to-point (2 usable IPs)';
+          } else {
+            els.valRange.textContent = calc.firstUsableStr + ' – ' + calc.lastUsableStr;
+            els.subRange.textContent = 'First to last assignable host address';
+          }
+
+          els.valCapacity.textContent =
+            calc.usableHosts.toLocaleString('en-US') +
+            (calc.usableHosts === 1 ? ' Usable Host' : ' Usable Hosts');
+          els.valCapacity.dataset.copyValue = String(calc.usableHosts);
+          els.metaTotal.textContent = calc.totalAddresses.toLocaleString('en-US') + ' Total';
+          els.metaClass.textContent = calc.ipClass;
+          els.metaScope.textContent = calc.ipScope;
+
+          if (calc.ipScope.indexOf('Private') === 0) {
+            els.metaScope.className = 'font-medium text-emerald-700 dark:text-emerald-400';
+          } else if (calc.ipScope === 'Public Internet') {
+            els.metaScope.className = 'font-medium text-blue-700 dark:text-blue-400';
+          } else {
+            els.metaScope.className = 'font-medium text-amber-700 dark:text-amber-400';
+          }
+        }
+
+        function renderSplitter(calc) {
+          els.splitterSubtitle.innerHTML =
+            'Divide <span class="font-mono tabular-nums text-slate-700 dark:text-slate-300">' +
+            calc.networkStr + '/' + calc.cidr +
+            '</span> into equal child networks';
+
+          const splitTabs = document.querySelectorAll('.split-tab');
+          for (let i = 0; i < splitTabs.length; i++) {
+            const tab = splitTabs[i];
+            const count = Number(tab.dataset.split);
+            const neededBits = Math.log2(count);
+            const possible = calc.cidr + neededBits <= 32;
+            const isActive = state.splitCount === count;
+
+            tab.disabled = !possible;
+            if (!possible) {
+              tab.className =
+                'split-tab px-3 py-1.5 text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 opacity-40 cursor-not-allowed text-slate-500 dark:text-slate-500';
+            } else if (isActive) {
+              tab.className =
+                'split-tab px-3 py-1.5 text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 shadow-sm';
+            } else {
+              tab.className =
+                'split-tab px-3 py-1.5 text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100';
+            }
+          }
+
+          const borrowBits = Math.log2(state.splitCount);
+          const childCidr = calc.cidr + borrowBits;
+
+          if (childCidr > 32) {
+            els.splitterTableWrap.classList.add('hidden');
+            els.splitterEmpty.classList.remove('hidden');
+            els.splitterEmpty.textContent =
+              'Cannot split a /' +
+              calc.cidr +
+              ' network into ' +
+              state.splitCount +
+              ' subnets because borrowing ' +
+              borrowBits +
+              ' host bits exceeds /32. Choose a smaller split or a shorter CIDR prefix.';
+            return;
+          }
+
+          els.splitterEmpty.classList.add('hidden');
+          els.splitterTableWrap.classList.remove('hidden');
+
+          const subnetSize = Math.pow(2, 32 - childCidr);
+          let rowsHtml = '';
+
+          for (let idx = 0; idx < state.splitCount; idx++) {
+            const childNetInt = (calc.networkInt + idx * subnetSize) >>> 0;
+            const childCalc = calculateSubnet(childNetInt, childCidr);
+            const rangeText =
+              childCidr === 32
+                ? childCalc.firstUsableStr
+                : childCalc.firstUsableStr + ' – ' + childCalc.lastUsableStr;
+            const bcastText =
+              childCidr >= 31 ? 'N/A (/' + childCidr + ')' : childCalc.broadcastStr;
+
+            rowsHtml +=
+              '<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">' +
+              '  <td class="py-2.5 px-4 text-slate-500 dark:text-slate-400">' + (idx + 1) + '</td>' +
+              '  <td class="py-2.5 px-4 font-semibold text-blue-600 dark:text-blue-400 whitespace-nowrap">' + childCalc.networkStr + '/' + childCidr + '</td>' +
+              '  <td class="py-2.5 px-4 text-slate-800 dark:text-slate-200 whitespace-nowrap">' + childCalc.networkStr + '</td>' +
+              '  <td class="py-2.5 px-4 text-slate-700 dark:text-slate-300 whitespace-nowrap">' + rangeText + '</td>' +
+              '  <td class="py-2.5 px-4 text-slate-600 dark:text-slate-400 whitespace-nowrap">' + bcastText + '</td>' +
+              '  <td class="py-2.5 px-4 text-right whitespace-nowrap">' +
+              '    <button type="button" data-load-subnet="' + childCalc.networkStr + '/' + childCidr + '" ' +
+              '      class="load-child-btn font-sans px-2.5 py-1 text-xs font-medium rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">' +
+              '      Load' +
+              '    </button>' +
+              '  </td>' +
+              '</tr>';
+          }
+
+          els.splitterTbody.innerHTML = rowsHtml;
+        }
+
+        function buildReferenceTable() {
+          let html = '';
+          for (let prefix = 8; prefix <= 32; prefix++) {
+            const maskInt = cidrToMaskInt(prefix);
+            const wildcardInt = (~maskInt) >>> 0;
+            const total = Math.pow(2, 32 - prefix);
+            const usable = prefix === 32 ? 1 : prefix === 31 ? 2 : total - 2;
+
+            html +=
+              '<tr data-ref-cidr="' + prefix + '" tabindex="0" role="button" ' +
+              '  aria-label="Apply /' + prefix + ' subnet mask" ' +
+              '  class="ref-row cursor-pointer transition-colors hover:bg-blue-50/70 dark:hover:bg-blue-950/30 focus-visible:outline-none focus-visible:bg-blue-50 dark:focus-visible:bg-blue-950/40">' +
+              '  <td class="py-2 px-4 font-semibold text-slate-900 dark:text-slate-100 whitespace-nowrap">/' + prefix + '</td>' +
+              '  <td class="py-2 px-4 text-slate-700 dark:text-slate-300 whitespace-nowrap">' + intToIp(maskInt) + '</td>' +
+              '  <td class="py-2 px-4 text-slate-500 dark:text-slate-400 whitespace-nowrap">' + intToIp(wildcardInt) + '</td>' +
+              '  <td class="py-2 px-4 text-right text-slate-600 dark:text-slate-400 whitespace-nowrap">' + total.toLocaleString('en-US') + '</td>' +
+              '  <td class="py-2 px-4 text-right font-medium text-slate-900 dark:text-slate-100 whitespace-nowrap">' + usable.toLocaleString('en-US') + '</td>' +
+              '</tr>';
+          }
+          els.cidrReferenceTbody.innerHTML = html;
+        }
+
+        function updateReferenceTableHighlight(cidr) {
+          els.chartActiveCidr.textContent = '/' + cidr;
+          const rows = els.cidrReferenceTbody.querySelectorAll('.ref-row');
+          for (let i = 0; i < rows.length; i++) {
+            const row = rows[i];
+            const rowCidr = Number(row.dataset.refCidr);
+            if (rowCidr === cidr) {
+              row.classList.add('bg-blue-50', 'dark:bg-blue-950/40');
+            } else {
+              row.classList.remove('bg-blue-50', 'dark:bg-blue-950/40');
+            }
+          }
+        }
+
+        function syncPresetButtons(ipStr, cidr) {
+          const current = ipStr + '/' + cidr;
+          const buttons = document.querySelectorAll('.preset-btn');
+          for (let i = 0; i < buttons.length; i++) {
+            const btn = buttons[i];
+            if (btn.dataset.preset === current) {
+              btn.classList.add('border-blue-500', 'text-blue-700', 'dark:text-blue-300', 'bg-blue-50', 'dark:bg-blue-950/40');
+            } else {
+              btn.classList.remove('border-blue-500', 'text-blue-700', 'dark:text-blue-300', 'bg-blue-50', 'dark:bg-blue-950/40');
+            }
+          }
+        }
+
+        function syncUrlAndTitle(calc) {
+          const cidrString = calc.ipStr + '/' + calc.cidr;
+          const targetHash = '#' + cidrString;
+          if (window.location.hash !== targetHash) {
+            try {
+              history.replaceState(null, '', targetHash);
+            } catch (e) {
+              window.location.hash = targetHash;
+            }
+          }
+          document.title = calc.networkStr + '/' + calc.cidr + ' Subnet Mask & Usable IP Range | Mohit Tools';
+        }
+
+        function renderAll(options) {
+          const opts = options || {};
+          const calc = calculateSubnet(state.ipInt, state.cidr);
+
+          if (!opts.skipInputSync) {
+            els.cidrInput.value = calc.ipStr + '/' + calc.cidr;
+            clearInputError();
+          }
+
+          els.cidrSlider.value = String(calc.cidr);
+          els.cidrReadout.textContent = '/' + calc.cidr;
+          els.maskInlineReadout.textContent = calc.maskStr;
+          els.cidrDecBtn.disabled = calc.cidr <= 1;
+          els.cidrIncBtn.disabled = calc.cidr >= 32;
+
+          // Adjust splitCount automatically if current split exceeds /32 and a smaller valid split exists
+          if (calc.cidr + Math.log2(state.splitCount) > 32) {
+            const availableMax = 32 - calc.cidr;
+            if (availableMax >= 1) {
+              state.splitCount = Math.min(state.splitCount, Math.pow(2, availableMax));
+            }
+          }
+
+          renderBitMatrix(calc);
+          renderTelemetry(calc);
+          renderSplitter(calc);
+          updateReferenceTableHighlight(calc.cidr);
+          syncPresetButtons(calc.ipStr, calc.cidr);
+
+          if (!opts.skipHashSync) {
+            syncUrlAndTitle(calc);
+          }
+        }
+
+        function showInputError(msg) {
+          els.cidrInputError.textContent = msg;
+          els.cidrInputError.classList.remove('hidden');
+          els.cidrInput.classList.add('border-red-500', 'dark:border-red-500', 'focus:ring-red-500');
+          els.cidrInput.classList.remove('border-slate-300', 'dark:border-slate-700', 'focus:ring-blue-500');
+        }
+
+        function clearInputError() {
+          els.cidrInputError.textContent = '';
+          els.cidrInputError.classList.add('hidden');
+          els.cidrInput.classList.remove('border-red-500', 'dark:border-red-500', 'focus:ring-red-500');
+          els.cidrInput.classList.add('border-slate-300', 'dark:border-slate-700', 'focus:ring-blue-500');
+        }
+
+        // =====================================================================
+        // 5. EVENT HANDLERS & INITIALIZATION
+        // =====================================================================
+        function initCopyButtons() {
+          const btns = document.querySelectorAll('.copy-btn');
+          for (let i = 0; i < btns.length; i++) {
+            btns[i].innerHTML = ICON_COPY;
+            btns[i].addEventListener('click', function () {
+              const targetId = this.dataset.copyTarget;
+              const targetEl = document.getElementById(targetId);
+              if (!targetEl) return;
+              const value = targetEl.dataset.copyValue || targetEl.textContent.trim();
+              copyText(value, this, 'Copied: ' + value);
+            });
+          }
+        }
+
+        function initEventListeners() {
+          // Theme switcher
+          els.themeToggleBtn.addEventListener('click', function () {
+            const isDark = document.documentElement.classList.toggle('dark');
+            try {
+              localStorage.setItem('mohit-subnet-theme', isDark ? 'dark' : 'light');
+            } catch (e) {}
+          });
+
+          // Brand link resets cleanly without hash jump issues
+          els.brandHomeLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+
+          // Live IPv4 / CIDR input
+          els.cidrInput.addEventListener('input', function () {
+            const parsed = parseCidrString(this.value, state.cidr);
+            if (!parsed.valid) {
+              showInputError(parsed.error);
+              return;
+            }
+            clearInputError();
+            state.ipInt = parsed.ipInt;
+            if (parsed.hasExplicitCidr) {
+              state.cidr = parsed.cidr;
+            }
+            renderAll({ skipInputSync: true });
+          });
+
+          els.cidrInput.addEventListener('blur', function () {
+            const parsed = parseCidrString(this.value, state.cidr);
+            if (parsed.valid) {
+              renderAll();
+            }
+          });
+
+          els.copyCidrBtn.addEventListener('click', function () {
+            const val = intToIp(state.ipInt) + '/' + state.cidr;
+            copyText(val, this, 'Copied CIDR: ' + val);
+          });
+
+          // CIDR Slider & Step Buttons
+          els.cidrSlider.addEventListener('input', function () {
+            state.cidr = Number(this.value);
+            renderAll();
+          });
+
+          els.cidrDecBtn.addEventListener('click', function () {
+            if (state.cidr > 1) {
+              state.cidr -= 1;
+              renderAll();
+            }
+          });
+
+          els.cidrIncBtn.addEventListener('click', function () {
+            if (state.cidr < 32) {
+              state.cidr += 1;
+              renderAll();
+            }
+          });
+
+          // Real-world Presets
+          const presetBtns = document.querySelectorAll('.preset-btn');
+          for (let i = 0; i < presetBtns.length; i++) {
+            presetBtns[i].addEventListener('click', function () {
+              const parsed = parseCidrString(this.dataset.preset, 24);
+              if (parsed.valid) {
+                state.ipInt = parsed.ipInt;
+                state.cidr = parsed.cidr;
+                renderAll();
+              }
+            });
+          }
+
+          // Click-to-Flip 32-Bit Matrix (Event Delegation)
+          els.octetMatrix.addEventListener('click', function (e) {
+            const btn = e.target.closest('.bit-btn');
+            if (!btn) return;
+            const bitIndex = Number(btn.dataset.bitIndex);
+            state.ipInt = flipBit(state.ipInt, bitIndex);
+            renderAll();
+          });
+
+          // Copy All Telemetry Summary
+          els.copySummaryBtn.addEventListener('click', function () {
+            const c = calculateSubnet(state.ipInt, state.cidr);
+            const summary = [
+              'CIDR: ' + c.ipStr + '/' + c.cidr,
+              'Network Address: ' + c.networkStr,
+              'Broadcast Address: ' + (c.cidr >= 31 ? 'None (' + (c.cidr === 31 ? 'RFC 3021 /31' : 'Host /32') + ')' : c.broadcastStr),
+              'Subnet Mask: ' + c.maskStr + ' (' + c.maskHex + ')',
+              'Wildcard Mask: ' + c.wildcardStr,
+              'Usable Host Range: ' + (c.cidr === 32 ? c.firstUsableStr : c.firstUsableStr + ' - ' + c.lastUsableStr),
+              'Usable Hosts: ' + c.usableHosts.toLocaleString('en-US') + ' (' + c.totalAddresses.toLocaleString('en-US') + ' total)',
+              'Class & Scope: ' + c.ipClass + ' · ' + c.ipScope,
+            ].join('\n');
+            copyText(summary, this, 'Copied full subnet telemetry');
+          });
+
+          // Subnet Splitter Tabs & Collapse Toggle
+          const splitTabs = document.querySelectorAll('.split-tab');
+          for (let i = 0; i < splitTabs.length; i++) {
+            splitTabs[i].addEventListener('click', function () {
+              if (this.disabled) return;
+              state.splitCount = Number(this.dataset.split);
+              if (!state.splitterOpen) {
+                state.splitterOpen = true;
+                els.splitterBody.classList.remove('hidden');
+                els.toggleSplitterBtn.textContent = 'Hide';
+                els.toggleSplitterBtn.setAttribute('aria-expanded', 'true');
+              }
+              renderSplitter(calculateSubnet(state.ipInt, state.cidr));
+            });
+          }
+
+          els.toggleSplitterBtn.addEventListener('click', function () {
+            state.splitterOpen = !state.splitterOpen;
+            if (state.splitterOpen) {
+              els.splitterBody.classList.remove('hidden');
+              this.textContent = 'Hide';
+              this.setAttribute('aria-expanded', 'true');
+            } else {
+              els.splitterBody.classList.add('hidden');
+              this.textContent = 'Show';
+              this.setAttribute('aria-expanded', 'false');
+            }
+          });
+
+          // Load Child Subnet into Main Visualizer
+          els.splitterTbody.addEventListener('click', function (e) {
+            const btn = e.target.closest('.load-child-btn');
+            if (!btn) return;
+            const parsed = parseCidrString(btn.dataset.loadSubnet, state.cidr);
+            if (parsed.valid) {
+              state.ipInt = parsed.ipInt;
+              state.cidr = parsed.cidr;
+              renderAll();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          });
+
+          // Interactive CIDR Reference Table Row Click & Keyboard Activation
+          function handleRefActivation(row) {
+            if (!row) return;
+            const prefix = Number(row.dataset.refCidr);
+            if (prefix >= 1 && prefix <= 32) {
+              state.cidr = prefix;
+              renderAll();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          }
+
+          els.cidrReferenceTbody.addEventListener('click', function (e) {
+            handleRefActivation(e.target.closest('.ref-row'));
+          });
+
+          els.cidrReferenceTbody.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              const row = e.target.closest('.ref-row');
+              if (row) {
+                e.preventDefault();
+                handleRefActivation(row);
+              }
+            }
+          });
+
+          // URL Hash Deep-Link Listener
+          window.addEventListener('hashchange', function () {
+            const rawHash = decodeURIComponent(window.location.hash.replace(/^#/, ''));
+            const parsed = parseCidrString(rawHash, state.cidr);
+            if (parsed.valid && parsed.hasExplicitCidr) {
+              state.ipInt = parsed.ipInt;
+              state.cidr = parsed.cidr;
+              renderAll({ skipHashSync: true });
+              syncUrlAndTitle(calculateSubnet(state.ipInt, state.cidr));
+            }
+          });
+        }
+
+        function bootstrap() {
+          buildOctetMatrixShell();
+          buildReferenceTable();
+          initCopyButtons();
+          initEventListeners();
+
+          // Initialize from URL hash if a valid CIDR deep-link is present
+          const initialHash = decodeURIComponent(window.location.hash.replace(/^#/, ''));
+          if (initialHash) {
+            const parsed = parseCidrString(initialHash, 24);
+            if (parsed.valid) {
+              state.ipInt = parsed.ipInt;
+              state.cidr = parsed.hasExplicitCidr ? parsed.cidr : 24;
+              renderAll();
+              return;
+            }
+          }
+
+          // Render default state without overwriting static SEO title until user or hash specifies one
+          renderAll({ skipHashSync: true });
+        }
+
+        bootstrap();
+      })();
+    </script>
+
+    <!-- Cookie Consent JS Initialization -->
+    <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+    <script>
+      window.addEventListener('load', function () {
+        if (window.cookieconsent) {
+          window.cookieconsent.initialise({
+            palette: {
+              popup: {
+                background: '#0f172a',
+                text: '#e2e8f0'
+              },
+              button: {
+                background: '#2563eb',
+                text: '#ffffff'
+              }
+            },
+            theme: 'classic',
+            position: 'bottom-right',
+            content: {
+              message: 'This website uses cookies for analytics and ads to deliver the best experience.',
+              dismiss: 'Got it',
+              link: 'Learn more',
+              href: 'privacy.html'
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
+
